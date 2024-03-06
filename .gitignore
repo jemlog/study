@@ -1,7 +1,9 @@
 .gradle
 build/
 gradle/
-.idea
+/.idea
+/gradle
+/settings.gradle.kts
 settings.gradle.kts
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/

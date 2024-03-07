@@ -1,0 +1,6 @@
+spring:
+  data:
+    redis:
+      host: 192.168.0.8
+      port: 6381
+      connect-timeout: 2000

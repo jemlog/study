@@ -1,4 +1,4 @@
-## Install Flow
+## 쿠버네티스 설치 메뉴얼
 
 ```shell
 echo '======== [4] Rocky Linux 기본 설정 ========'

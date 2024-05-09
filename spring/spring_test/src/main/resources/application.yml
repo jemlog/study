@@ -1,0 +1,25 @@
+management:
+  server:
+    port: 8081
+  endpoints:
+    prometheus:
+      enabled: true
+    jmx:
+      exposure:
+        exclude: '*'
+    web:
+      base-path: /check
+      exposure:
+        include: '*'
+  tracing:
+    sampling:
+      probability: 1.0
+    propagation:
+      produce: b3_multi
+      consume: b3_multi
+    zipkin:
+      tracing:
+        endpoint: "http://localhost:9411/api/v2/spans"
+spring:
+  application:
+    name: spring_test

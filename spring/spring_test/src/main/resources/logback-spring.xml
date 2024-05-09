@@ -48,63 +48,64 @@
     </appender>
 
     <!-- kafkaAppender 추가 -->
-    <appender name="info-log-kafkaAppender" class="com.github.danielwegener.logback.kafka.KafkaAppender">
-        <filter class="ch.qos.logback.classic.filter.LevelFilter">
-            <level>INFO</level>
-            <onMatch>ACCEPT</onMatch>
-            <onMismatch>DENY</onMismatch>
-        </filter>
-        <encoder class="com.github.danielwegener.logback.kafka.encoding.LayoutKafkaMessageEncoder">
-            <layout class="ch.qos.logback.classic.PatternLayout">
-                <Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %magenta([%X{CORRELATION_ID:-NO CORRELATION ID}]) %highlight([%-3level]) %logger{5} - %msg %n</Pattern>
-            </layout>
-        </encoder>
-        <topic>info-log</topic>
-        <producerConfig>bootstrap.servers=192.168.0.8:29092</producerConfig>
-        <!-- Fallback 설정 -->
-        <appender-ref ref="STDOUT" />
-    </appender>
+<!--    <appender name="info-log-kafkaAppender" class="com.github.danielwegener.logback.kafka.KafkaAppender">-->
+<!--        <filter class="ch.qos.logback.classic.filter.LevelFilter">-->
+<!--            <level>INFO</level>-->
+<!--            <onMatch>ACCEPT</onMatch>-->
+<!--            <onMismatch>DENY</onMismatch>-->
+<!--        </filter>-->
+<!--        <encoder class="com.github.danielwegener.logback.kafka.encoding.LayoutKafkaMessageEncoder">-->
+<!--            <layout class="ch.qos.logback.classic.PatternLayout">-->
+<!--                <Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %magenta([%X{CORRELATION_ID:-NO CORRELATION ID}]) %highlight([%-3level]) %logger{5} - %msg %n</Pattern>-->
+<!--            </layout>-->
+<!--        </encoder>-->
+<!--        <topic>info-log</topic>-->
+<!--        <producerConfig>bootstrap.servers=192.168.0.8:29092</producerConfig>-->
+<!--        &lt;!&ndash; Fallback 설정 &ndash;&gt;-->
+<!--        <appender-ref ref="STDOUT" />-->
+<!--    </appender>-->
 
-    <appender name="error-log-kafkaAppender" class="com.github.danielwegener.logback.kafka.KafkaAppender">
-        <filter class="ch.qos.logback.classic.filter.LevelFilter">
-            <level>ERROR</level>
-            <onMatch>ACCEPT</onMatch>
-            <onMismatch>DENY</onMismatch>
-        </filter>
-        <encoder class="com.github.danielwegener.logback.kafka.encoding.LayoutKafkaMessageEncoder">
-            <layout class="ch.qos.logback.classic.PatternLayout">
-                <Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %magenta([%X{CORRELATION_ID:-NO CORRELATION ID}]) %highlight([%-3level]) %logger{5} - %msg %n</Pattern>
-            </layout>
-        </encoder>
-        <topic>error-log</topic>
-        <producerConfig>bootstrap.servers=192.168.0.8:29092</producerConfig>
-        <!-- Fallback 설정 -->
-        <appender-ref ref="STDOUT" />
-    </appender>
+<!--    <appender name="error-log-kafkaAppender" class="com.github.danielwegener.logback.kafka.KafkaAppender">-->
+<!--        <filter class="ch.qos.logback.classic.filter.LevelFilter">-->
+<!--            <level>ERROR</level>-->
+<!--            <onMatch>ACCEPT</onMatch>-->
+<!--            <onMismatch>DENY</onMismatch>-->
+<!--        </filter>-->
+<!--        <encoder class="com.github.danielwegener.logback.kafka.encoding.LayoutKafkaMessageEncoder">-->
+<!--            <layout class="ch.qos.logback.classic.PatternLayout">-->
+<!--                <Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %magenta([%X{CORRELATION_ID:-NO CORRELATION ID}]) %highlight([%-3level]) %logger{5} - %msg %n</Pattern>-->
+<!--            </layout>-->
+<!--        </encoder>-->
+<!--        <topic>error-log</topic>-->
+<!--        <producerConfig>bootstrap.servers=192.168.0.8:29092</producerConfig>-->
+<!--        &lt;!&ndash; Fallback 설정 &ndash;&gt;-->
+<!--        <appender-ref ref="STDOUT" />-->
+<!--    </appender>-->
 
 
     <appender name="ASYNC-INFO" class="ch.qos.logback.classic.AsyncAppender">
-        <appender-ref ref="info-log-kafkaAppender"/>
+<!--        <appender-ref ref="info-log-kafkaAppender"/>-->
+        <appender-ref ref="INFO_LOG"/>
         <queueSize>100</queueSize>
-        <discardingThreshold>20</discardingThreshold>
+<!--        <discardingThreshold>20</discardingThreshold>-->
         <includeCallerData>false</includeCallerData>
         <neverBlock>true</neverBlock>
     </appender>
 
-    <appender name="ASYNC-ERROR" class="ch.qos.logback.classic.AsyncAppender">
-        <appender-ref ref="error-log-kafkaAppender"/>
-        <queueSize>100</queueSize>
-        <discardingThreshold>20</discardingThreshold>
-        <includeCallerData>false</includeCallerData>
-        <neverBlock>true</neverBlock>
-    </appender>
+<!--    <appender name="ASYNC-ERROR" class="ch.qos.logback.classic.AsyncAppender">-->
+<!--        <appender-ref ref="error-log-kafkaAppender"/>-->
+<!--        <queueSize>100</queueSize>-->
+<!--        <discardingThreshold>20</discardingThreshold>-->
+<!--        <includeCallerData>false</includeCallerData>-->
+<!--        <neverBlock>true</neverBlock>-->
+<!--    </appender>-->
 
     <!--전역 Logger-->
     <root level="INFO">
         <appender-ref ref="ASYNC-INFO" />
-        <appender-ref ref="ASYNC-ERROR" />
-        <appender-ref ref="ERROR_LOG"/>
-        <appender-ref ref="INFO_LOG"/>
+<!--        <appender-ref ref="ASYNC-ERROR" />-->
+<!--        <appender-ref ref="ERROR_LOG"/>-->
+<!--        <appender-ref ref="INFO_LOG"/>-->
         <appender-ref ref="STDOUT"/>
     </root>
 </configuration>

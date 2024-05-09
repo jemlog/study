@@ -1,3 +1,13 @@
+### MDC의 용도
+- Tracing을 사용할때 TraceID, SpanID 등을 MDC에 저장해준다
+- 직접 UUID 값을 넣어서 logback에서 가져올 수도 있다
+
+```shell
+<encoder>
+<Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %magenta([%thread,%X{traceId:-},%X{spanId:-}]) %highlight([%-3level]) %logger{5} - %msg %n</Pattern>
+</encoder>
+```
+
 ### TaskExecutor에서 MDC 전파하는 방법
 
 Spring Async를 사용할때 TaskExecutor를 그대로 사용하면 톰캣 스레드의 MDC가 TaskExecutor의 스레드에 전파되지 않는다.
@@ -47,5 +57,45 @@ implementation("org.jetbrains.kotlinx:kotlinx-coroutines-slf4j:1.6.0")
 ```kotlin
 runBlocking(MDCContext()) {
     log.info("실행")
+}
+```
+
+### MDC 내부 구조
+
+MDC는 내부적으로 `MDCAdapter`를 사용해서 데이터를 put/get 한다. 이때 SLF4J의 구현체를 어떤걸 사용하느냐에 따라 달라진다. `LogbackMDCAdapter`를 살펴보자.
+Thread별 MDC 저장에 ThreadLocal을 사용한다.
+
+```kotlin
+final ThreadLocal<Map<String, String>> readWriteThreadLocalMap = new ThreadLocal<Map<String, String>>();
+
+public void put(String key, String val) throws IllegalArgumentException {
+    if (key == null) {
+        throw new IllegalArgumentException("key cannot be null");
+    }
+    Map<String, String> current = readWriteThreadLocalMap.get();
+    if (current == null) {
+        current = new HashMap<String, String>();
+        readWriteThreadLocalMap.set(current);
+    }
+
+    current.put(key, val);
+    nullifyReadOnlyThreadLocalMap();
+}
+
+@Override
+public String get(String key) {
+    Map<String, String> hashMap = readWriteThreadLocalMap.get();
+
+    if ((hashMap != null) && (key != null)) {
+        return hashMap.get(key);
+    } else {
+        return null;
+    }
+}
+
+@Override
+public void clear() {
+    readWriteThreadLocalMap.set(null);
+    nullifyReadOnlyThreadLocalMap();
 }
 ```

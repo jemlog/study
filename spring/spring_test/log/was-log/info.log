@@ -1,0 +1,40 @@
+2024-05-11 00:17:55.376 [35m[NO CORRELATION ID][0;39m [34m[INFO][0;39m o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default' 
+2024-05-11 00:17:55.379 [35m[NO CORRELATION ID][0;39m [34m[INFO][0;39m c.z.h.HikariDataSource - HikariPool-1 - Shutdown initiated... 
+2024-05-11 00:17:55.381 [35m[NO CORRELATION ID][0;39m [34m[INFO][0;39m c.z.h.HikariDataSource - HikariPool-1 - Shutdown completed. 
+2024-05-11 01:56:14.275 [35m[NO CORRELATION ID][0;39m [34m[INFO][0;39m c.e.s.SpringTestApplicationKt - Starting SpringTestApplicationKt using Java 21.0.2 with PID 6680 (/Users/seojemin/IdeaProjects/tech_study_repo/spring/spring_test/build/classes/kotlin/main started by seojemin in /Users/seojemin/IdeaProjects/tech_study_repo) 
+2024-05-11 01:56:14.275 [35m[NO CORRELATION ID][0;39m [34m[INFO][0;39m c.e.s.SpringTestApplicationKt - No active profile set, falling back to 1 default profile: "default" 
+2024-05-11 01:56:14.766 [35m[NO CORRELATION ID][0;39m [34m[INFO][0;39m o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode. 
+2024-05-11 01:56:14.777 [35m[NO CORRELATION ID][0;39m [34m[INFO][0;39m o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 7 ms. Found 0 JPA repository interfaces. 
+2024-05-11 01:56:15.149 [35m[NO CORRELATION ID][0;39m [34m[INFO][0;39m o.s.b.w.e.t.TomcatWebServer - Tomcat initialized with port 8080 (http) 
+2024-05-11 01:56:15.155 [35m[NO CORRELATION ID][0;39m [34m[INFO][0;39m o.a.c.h.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"] 
+2024-05-11 01:56:15.155 [35m[NO CORRELATION ID][0;39m [34m[INFO][0;39m o.a.c.c.StandardService - Starting service [Tomcat] 
+2024-05-11 01:56:15.155 [35m[NO CORRELATION ID][0;39m [34m[INFO][0;39m o.a.c.c.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.20] 
+2024-05-11 01:56:15.179 [35m[NO CORRELATION ID][0;39m [34m[INFO][0;39m o.a.c.c.C.[.[.[/] - Initializing Spring embedded WebApplicationContext 
+2024-05-11 01:56:15.179 [35m[NO CORRELATION ID][0;39m [34m[INFO][0;39m o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 883 ms 
+2024-05-11 01:56:15.471 [35m[NO CORRELATION ID][0;39m [34m[INFO][0;39m o.h.j.i.u.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default] 
+2024-05-11 01:56:15.504 [35m[NO CORRELATION ID][0;39m [34m[INFO][0;39m o.h.Version - HHH000412: Hibernate ORM core version 6.4.4.Final 
+2024-05-11 01:56:15.521 [35m[NO CORRELATION ID][0;39m [34m[INFO][0;39m o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled 
+2024-05-11 01:56:15.638 [35m[NO CORRELATION ID][0;39m [34m[INFO][0;39m o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer 
+2024-05-11 01:56:15.652 [35m[NO CORRELATION ID][0;39m [34m[INFO][0;39m c.z.h.HikariDataSource - HikariPool-1 - Starting... 
+2024-05-11 01:56:15.734 [35m[NO CORRELATION ID][0;39m [34m[INFO][0;39m c.z.h.p.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@56193e3a 
+2024-05-11 01:56:15.735 [35m[NO CORRELATION ID][0;39m [34m[INFO][0;39m c.z.h.HikariDataSource - HikariPool-1 - Start completed. 
+2024-05-11 01:56:15.936 [35m[NO CORRELATION ID][0;39m [34m[INFO][0;39m o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration) 
+2024-05-11 01:56:15.938 [35m[NO CORRELATION ID][0;39m [34m[INFO][0;39m o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default' 
+2024-05-11 01:56:16.509 [35m[NO CORRELATION ID][0;39m [34m[INFO][0;39m o.a.c.h.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"] 
+2024-05-11 01:56:16.517 [35m[NO CORRELATION ID][0;39m [34m[INFO][0;39m o.s.b.w.e.t.TomcatWebServer - Tomcat started on port 8080 (http) with context path '' 
+2024-05-11 01:56:16.546 [35m[NO CORRELATION ID][0;39m [34m[INFO][0;39m o.s.b.w.e.t.TomcatWebServer - Tomcat initialized with port 8081 (http) 
+2024-05-11 01:56:16.546 [35m[NO CORRELATION ID][0;39m [34m[INFO][0;39m o.a.c.h.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8081"] 
+2024-05-11 01:56:16.546 [35m[NO CORRELATION ID][0;39m [34m[INFO][0;39m o.a.c.c.StandardService - Starting service [Tomcat] 
+2024-05-11 01:56:16.546 [35m[NO CORRELATION ID][0;39m [34m[INFO][0;39m o.a.c.c.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.20] 
+2024-05-11 01:56:16.552 [35m[NO CORRELATION ID][0;39m [34m[INFO][0;39m o.a.c.c.C.[.[.[/] - Initializing Spring embedded WebApplicationContext 
+2024-05-11 01:56:16.553 [35m[NO CORRELATION ID][0;39m [34m[INFO][0;39m o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 34 ms 
+2024-05-11 01:56:16.558 [35m[NO CORRELATION ID][0;39m [34m[INFO][0;39m o.s.b.a.e.w.EndpointLinksResolver - Exposing 14 endpoint(s) beneath base path '/check' 
+2024-05-11 01:56:16.576 [35m[NO CORRELATION ID][0;39m [34m[INFO][0;39m o.a.c.h.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8081"] 
+2024-05-11 01:56:16.579 [35m[NO CORRELATION ID][0;39m [34m[INFO][0;39m o.s.b.w.e.t.TomcatWebServer - Tomcat started on port 8081 (http) with context path '' 
+2024-05-11 01:56:16.587 [35m[NO CORRELATION ID][0;39m [34m[INFO][0;39m c.e.s.SpringTestApplicationKt - Started SpringTestApplicationKt in 2.553 seconds (process running for 3.046) 
+2024-05-11 01:56:17.574 [35m[NO CORRELATION ID][0;39m [34m[INFO][0;39m o.a.c.c.C.[.[.[/] - Initializing Spring DispatcherServlet 'dispatcherServletRegistration' 
+2024-05-11 01:56:17.574 [35m[NO CORRELATION ID][0;39m [34m[INFO][0;39m o.s.w.s.DispatcherServlet - Initializing Servlet 'dispatcherServletRegistration' 
+2024-05-11 01:56:17.574 [35m[NO CORRELATION ID][0;39m [34m[INFO][0;39m o.s.w.s.DispatcherServlet - Completed initialization in 0 ms 
+2024-05-11 02:02:20.344 [35m[NO CORRELATION ID][0;39m [34m[INFO][0;39m o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default' 
+2024-05-11 02:02:20.350 [35m[NO CORRELATION ID][0;39m [34m[INFO][0;39m c.z.h.HikariDataSource - HikariPool-1 - Shutdown initiated... 
+2024-05-11 02:02:20.361 [35m[NO CORRELATION ID][0;39m [34m[INFO][0;39m c.z.h.HikariDataSource - HikariPool-1 - Shutdown completed. 

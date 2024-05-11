@@ -5,6 +5,7 @@ plugins {
     id("io.spring.dependency-management") version "1.1.4"
     kotlin("jvm") version "1.9.23"
     kotlin("plugin.spring") version "1.9.23"
+    kotlin("plugin.jpa") version "1.9.23"
 }
 
 group = "com.example"
@@ -20,6 +21,8 @@ repositories {
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    runtimeOnly("com.mysql:mysql-connector-j")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.boot:spring-boot-starter-aop")
     implementation("io.zipkin.reporter2:zipkin-reporter-brave") // 그 데이터를 zipkin으로 reporting 해주는 구현체
@@ -29,6 +32,7 @@ dependencies {
 
     // kafka 관련 설정
     implementation("org.springframework.kafka:spring-kafka")
+    implementation("org.apache.httpcomponents.client5:httpclient5:5.3.1")
     implementation ("com.github.danielwegener:logback-kafka-appender:0.1.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.2")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-slf4j:1.6.0")

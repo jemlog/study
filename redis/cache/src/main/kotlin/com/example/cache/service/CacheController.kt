@@ -9,7 +9,8 @@ class CacheController(
 ) {
 
     @GetMapping("/api/v1/test")
-    fun test(): Test{
-        return cacheService.get(2L)
+    fun test(): String{
+        cacheService.get(1L)
+        return "success"
     }
 }

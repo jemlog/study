@@ -19,6 +19,7 @@ class AsyncConfig {
     fun taskExecutor(): TaskExecutor {
         val taskExecutorAdapter = TaskExecutorAdapter(Executors.newVirtualThreadPerTaskExecutor())
         taskExecutorAdapter.setTaskDecorator(MDCTaskDecorator())
+
         return taskExecutorAdapter
     }
 }

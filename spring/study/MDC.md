@@ -1,14 +1,16 @@
 ### MDC의 용도
-- Tracing을 사용할때 TraceID, SpanID 등을 MDC에 저장해준다
-- 직접 UUID 값을 넣어서 logback에서 가져올 수도 있다
+- Micrometer Tracing 사용할때 TraceID, SpanID, ParentSpanID를 MDC에 자동으로 저장
+- Filter에서 직접 고유값 생성 후 MDC에 넣어주는 방식도 사용 가능
+
+### Logback에서 MDC 내의 값 조회하는 방법
 
 ```shell
 <encoder>
-<Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %magenta([%thread,%X{traceId:-},%X{spanId:-}]) %highlight([%-3level]) %logger{5} - %msg %n</Pattern>
+<Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %magenta([%thread,%X{traceId:default},%X{spanId:-}]) %highlight([%-3level]) %logger{5} - %msg %n</Pattern>
 </encoder>
 ```
 
-### TaskExecutor에서 MDC 전파하는 방법
+### TaskExecutor에서 메인 쓰레드 MDC 전파하는 법
 
 Spring Async를 사용할때 TaskExecutor를 그대로 사용하면 톰캣 스레드의 MDC가 TaskExecutor의 스레드에 전파되지 않는다.
 따라서 `TaskDecorator`를 사용해서 MDC Context를 복사해서 넣어야 한다.
@@ -44,7 +46,7 @@ class AsyncConfig {
     }
 }
 ```
-### 코루틴에서 MDC 전파하는 방법
+### 코루틴에서 메인 쓰레드 MDC 전파하는 방법
 
 코루틴에서는 MDC 전파를 위해 별도의 라이브러리를 다운 받아야 한다.
 
@@ -66,36 +68,44 @@ MDC는 내부적으로 `MDCAdapter`를 사용해서 데이터를 put/get 한다.
 Thread별 MDC 저장에 ThreadLocal을 사용한다.
 
 ```kotlin
-final ThreadLocal<Map<String, String>> readWriteThreadLocalMap = new ThreadLocal<Map<String, String>>();
 
-public void put(String key, String val) throws IllegalArgumentException {
-    if (key == null) {
-        throw new IllegalArgumentException("key cannot be null");
+class LogbackMDCAdapter {
+
+    final ThreadLocal<Map<String, String>> readWriteThreadLocalMap = new ThreadLocal<Map<String, String>>();
+
+    public void put(String key, String
+    val ) throws IllegalArgumentException{
+        if (key == null) {
+            throw new IllegalArgumentException ("key cannot be null");
+        }
+        Map<String, String> current = readWriteThreadLocalMap . get ();
+        if (current == null) {
+            current = new HashMap < String, String>();
+            readWriteThreadLocalMap.set(current);
+        }
+
+        current.put(key, val);
+        nullifyReadOnlyThreadLocalMap();
     }
-    Map<String, String> current = readWriteThreadLocalMap.get();
-    if (current == null) {
-        current = new HashMap<String, String>();
-        readWriteThreadLocalMap.set(current);
+
+    @Override
+    public String get(String key)
+    {
+        Map<String, String> hashMap = readWriteThreadLocalMap . get ();
+
+        if ((hashMap != null) && (key != null)) {
+            return hashMap.get(key);
+        } else {
+            return null;
+        }
     }
 
-    current.put(key, val);
-    nullifyReadOnlyThreadLocalMap();
-}
-
-@Override
-public String get(String key) {
-    Map<String, String> hashMap = readWriteThreadLocalMap.get();
-
-    if ((hashMap != null) && (key != null)) {
-        return hashMap.get(key);
-    } else {
-        return null;
+    @Override
+    public void clear()
+    {
+        readWriteThreadLocalMap.set(null);
+        nullifyReadOnlyThreadLocalMap();
     }
-}
 
-@Override
-public void clear() {
-    readWriteThreadLocalMap.set(null);
-    nullifyReadOnlyThreadLocalMap();
 }
 ```

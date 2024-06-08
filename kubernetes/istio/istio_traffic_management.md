@@ -2,11 +2,11 @@
 
 ## Virtual Service
 
-Virtual Service는 Istio 트래픽 관리를 유연하고 효과적으로 만드는데 핵심 역할을 한다.
+Istio 트래픽 관리를 유연하고 효과적으로 하는데 핵심 역할을 한다.
 
 ### Traffic Routing
-HTTP 통신 중 특정 헤더의 여부에 따라 다른 버전의 서비스로 라우팅한다. 만약 이런 설정이 아예 없다면 버전과 상관없이 round robin으로 
-트래픽을 전송한다.
+
+사용자가 설정한 Rule에 따라 트래픽 라우팅을 진행한다. 별도의 Rule을 지정하지 않으면 모든 버전에 대해 **Round Robin**으로 트래픽을 라우팅한다.
 
 ```yaml
 apiVersion: networking.istio.io/v1alpha3
@@ -20,7 +20,7 @@ spec:
   - match:
     - headers:
         end-user:
-          exact: jason
+          exact: jason # HTTP Header 값을 사용해서 Routing 할 수 있다
     route:
     - destination:
         host: reviews
@@ -30,73 +30,14 @@ spec:
         host: reviews
         subset: v1
 ```
-이런 방식으로 특정 버전의 서비스를 fix해서 트래픽을 전송할 수 있다.
-```yaml
-apiVersion: networking.istio.io/v1alpha3
-kind: VirtualService
-metadata:
-  name: productpage
-spec:
-  hosts:
-  - productpage
-  http:
-  - route:
-    - destination:
-        host: productpage
-        subset: v1
----
-apiVersion: networking.istio.io/v1alpha3
-kind: VirtualService
-metadata:
-  name: reviews
-spec:
-  hosts:
-  - reviews
-  http:
-  - route:
-    - destination:
-        host: reviews
-        subset: v1
----
-apiVersion: networking.istio.io/v1alpha3
-kind: VirtualService
-metadata:
-  name: ratings
-spec:
-  hosts:
-  - ratings
-  http:
-  - route:
-    - destination:
-        host: ratings
-        subset: v1
----
-apiVersion: networking.istio.io/v1alpha3
-kind: VirtualService
-metadata:
-  name: details
-spec:
-  hosts:
-  - details
-  http:
-  - route:
-    - destination:
-        host: details
-        subset: v1
----
-```
 
 ## Destination Rule
 
-Destination Rule은 Istio 트래픽 라우팅 기능의 핵심 부분이다. Virtual Service가 어떻게 목적지로 트래픽을 라우팅 하는지를 알려준다면, Destination Rule은 목적지에서 트래픽이 어떤 일이 발생하는지를 알려준다.
+VirtualService와 함께 Istio 트래픽 라우팅의 핵심 부분. 
+VirtualService가 어느 목적지로 트래픽을 라우팅할지 결정한다면, Destination Rule은 그 목적지에 대한 트래픽에 어떤 일이 발생하는지를 설정한다.
+Destination Rule은 Virtual Service를 평가한 뒤에 적용되므로, 트래픽의 실제 목적지에 적용된다.
 
-기존적으로 이스티오는 least requests 로드밸런싱 정책을 사용한다. 
 
-- Random
-- Weighted
-- Round Robin
-
-이 3가지의 방식을 추가로 제공한다.
 
 ## Network resilience
 

@@ -18,8 +18,14 @@ import java.util.stream.StreamSupport
 
 
 @RestController
-class TestController {
+class TestController(
+    private val asyncService: AsyncService
+) {
 
     val log: Logger = LoggerFactory.getLogger(TestController::class.java)
 
+    @GetMapping("/hello")
+    suspend fun get(): String{
+       return asyncService.asyncCall()
+    }
 }

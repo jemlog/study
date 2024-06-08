@@ -7,7 +7,6 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 
-@Component
 class SimpleLoggingHandler : ObservationHandler<Observation.Context?> {
     override fun supportsContext(context: Observation.Context): Boolean {
         return true

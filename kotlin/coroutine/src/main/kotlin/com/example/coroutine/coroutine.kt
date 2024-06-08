@@ -1,14 +1,23 @@
 package com.example.coroutine
 
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.*
 import java.util.concurrent.Executors
 
 
-fun main(){
+suspend fun main(){
 
-    val vt = Thread.ofVirtual().unstarted { println(Thread.currentThread().isVirtual) }
+    val job3 = CoroutineScope(Dispatchers.Default).launch {
 
-    vt.start()
+        launch {
+            printWithThread("API CALL 1")
+            delay(1_000L)
+            printWithThread("API CALL 3")
+        }
 
-    vt.join()
+        launch {
+            printWithThread("API CALL 2")
+        }
+    }
+
+    job3.join()
 }

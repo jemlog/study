@@ -19,9 +19,9 @@ class NamedParameterJdbcTemplateRepository(
         jdbc.batchUpdate(
             """ 
           INSERT INTO USER
-          (name, age, grade, createdAt) 
+          (name, grade, createdAt) 
           VALUES 
-          (:name, :age, :grade, :createdAt)
+          (:name, :grade, :createdAt)
           """.trimIndent(),
             namedParameters.toTypedArray()
         )

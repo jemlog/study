@@ -19,7 +19,7 @@ class PreparedStatementRepository {
             val url = "jdbc:mysql://localhost:3306/mysql_study_db?useSSL=false&characterEncoding=UTF-8&serverTimezone=UTC"
 
             conn = DriverManager.getConnection(url,"root","1234")
-            pstmt = conn.prepareStatement("insert into user (name) values (?)")
+            pstmt = conn.prepareStatement("insert into user (name,grade) values (?,?)")
             pstmt.setString(1, "test")
             pstmt.executeUpdate()
         }

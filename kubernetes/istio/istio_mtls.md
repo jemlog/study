@@ -23,6 +23,14 @@ Pod 내에서 MicroService와 Envoy Proxy는 HTTP 평문 통신을 하지만, En
 
 Istio는 자동적으로 다른 워크로드 호출할때 mTLS를 사용하도록 sidecar를 구성
 
+### mTLS 작동 순서
+1. Istio는 클라이언트 어플리케이션의 아웃바운드 트래픽을 클라이언트의 로컬 사이드카 프록시로 라우팅한다.
+2. 클라이언트의 사이드카 프록시는 서버의 사이드카 프록시와 mTLS 핸드쉐이크를 맺는다. 핸드쉐이크 과정에서 클라이언트의 Envoy 프록시는 서버의 certificate에 표현된 서비스 어카운트가 인증되었는지 확인하기 위한 Secure Naming도 진행한다.
+3. 클라이언트 Envoy 프록시와 서버 Envoy 프록시는 mTLS Connection을 생성하고, Istio가 트래픽을 전달한다.
+4. 서버 Envoy 프록시는 요청을 인증한다. 만약 인증에 성공했다면 트래픽을 내부 TCP 커넥션을 통해 서버 어플리케이션으로 전달한다.
+
+> Istio는 TLS 버전을 최소 TLSv1_2로 설정해야 한다.
+
 ### mTLS 모드
 - PERMISSIVE(default) : 워크로드가 mTLS 와 plainText 트래픽을 모두 허용
 - STRICT : 워크로드가 mTLS 트래픽만 허용
@@ -41,3 +49,8 @@ spec:
 ```
   
 특정 namespace에 적용하면 해당 namespace에만 mTLS 정책이 걸리고, **istio-system** 네임스페이스에 적용하면 전역적으로 사용된다.
+
+### mTLS이 적용되는 원리
+
+Istio Agent는 private key와 CSR을 만든다. 그리고 CSR을 그것의 credentials와 함께 istiod로 보낸다.
+istioD 내의 CA가 CSR 내부의 credentials를 검증한다. 만약 검증에 성공하면 그것은 CSR을 사인한다. certificate를 만들기 위해. 만약 워크로드가 시작되면, Envoy는 istio agent에게 certificate and key를 요구한다. SDS API를 사용해서. Istio Agent는 istiod로부터 받은 certificates를 private key와 함께 Envoy에게 준다. Istio agent는 workload certificate의 유효기간 계속 본다.  Istiod의 citadel 역할

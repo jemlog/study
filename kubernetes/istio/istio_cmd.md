@@ -1,9 +1,6 @@
 # Istio 명령어
 
-
-
-
-### Istio Auto Injection 활성화
+### Istio Sidecar Auto Injection 활성화
 ```shell
 kubectl label namespace default istio-injection=enabled
 ```

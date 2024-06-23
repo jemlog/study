@@ -1,4 +1,4 @@
-# Envoy Proxy 엑세스 로그 확인
+## Envoy Proxy Access Log
 
 ### Telemetry 설정
 ```yaml

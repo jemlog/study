@@ -1,5 +1,6 @@
+## TLS
 
-### TLS Handshake
+### TLS Handshake Process
 
 1. 클라이언트가 client hello 메세지를 보낸다. 이때 메세지는 클라이언트가 어떤 TLS 버전을 지원하는지, 사이퍼 슈트는 어떤거 지원하는지, 그리고 client random이라고 알려진 랜덤한 문자열을 보낸다.
 2. 클라이언트 헬로에 대한 응답으로 서버는 SSL 인증서, 선택한 사이퍼 슈트, 그리고 Server random을 보낸다.
@@ -13,8 +14,9 @@
 
 ### Cipher Suite
 
+```shell
 TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA
-
+```
 최근에는 FS, PFS를 위해 RSA 키 교환 방식 대신 DECDHE를 많이 사용한다. 이 방식은 Client Key Exchange 과정에서 비밀키를 교환 안하기 때문에 서버 개인키 탈취되도 문제 없다.
 서로 비밀키를 생성할때 필요한 파라미터만 교환
 

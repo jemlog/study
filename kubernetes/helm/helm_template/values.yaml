@@ -1,0 +1,115 @@
+# Default values for myapp.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+image:
+  repository: sjmin/myapp
+  pullPolicy: Always
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: ""
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Automatically mount a ServiceAccount's API credentials?
+  automount: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+podAnnotations: {}
+podLabels: {}
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+service:
+  type: NodePort
+  port: 0
+
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  hosts:
+    - host: chart-example.local
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
+
+resources:
+   limits:
+     cpu: 300m
+     memory: 800Mi
+   requests:
+     cpu: 100m
+     memory: 500Mi
+
+startupProbe:
+  httpGet:
+    path: /health
+    port: 8080
+  periodSeconds: 5
+  failureThreshold: 24
+livenessProbe:
+  httpGet:
+    path: /health
+    port: 8080
+  periodSeconds: 10
+  failureThreshold: 3
+readinessProbe:
+  httpGet:
+    path: /health
+    port: 8080
+  periodSeconds: 10
+  failureThreshold: 3
+
+replicaCount: 2
+
+autoscaling:
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+  targetMemoryUtilizationPercentage: 80
+
+tolerations: []
+
+affinity: {}
+
+volumes:
+  - name: secret-datasource # 해당 이름을 가지는 노드의 영역에
+    secret:
+      secretName: myapp-mysql # 이런 이름으로 저장할 것이다
+
+volumeMounts:
+  - name: secret-datasource
+    mountPath: "/usr/src/myapp/datasource" # secret 어디 들어가는지 설정
+
+configmap: # configmap 데이터 할당
+  data:
+    properties:
+      spring_profiles_active: default
+
+nodeSelector:
+  kubernetes.io/hostname: k8s-master

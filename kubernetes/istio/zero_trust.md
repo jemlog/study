@@ -1,4 +1,4 @@
-### 쿠버네티스 클러스터 내부의 마이크로 서비스 간 제로 트러스트
+### [토스 Slash 정리] Istio를 사용한 제로 트러스트 구현
 
 - 클러스터 내부에서는 기본 설정으로 모든 파드가 네임스페이스 관계없이 서로 통신이 가능하다.
 - 이 때 악의적인 사용자가 gateway 우회해서 직접 서비스 접근하거나 탈취할 수 있다
@@ -12,7 +12,6 @@ Istio 서비스 메시 사용하면 mTLS 적용 가능하다
 
 - 중간에 들어와서 패킷 캡쳐해도 내용 모른다
 - API 호출하려고 해도 상호 인증 안됐기 때문에 호출 못한다.
-
 
 보통 쿠버네티스 클러스터 외부에서 들어올때 ingress gateway를 거지고 거기서 1차적으로 클라이언트의 mTLS 체크한다. 그 다음 트래픽에 IStio Gateway가 X-Forwarded-Client-Cert 헤더에
 인증서 정보와 함께 internal-secure-gateway로 넘긴다.
@@ -43,14 +42,3 @@ Serviceentry를 사용하면 외부서비스를 내부 서비스 메시로 포�
 - 만약 X-Forwared-For에서 상대방 누군지 안알려주면 내부 서비스 입장에서는 상대방이 L7 프록시이다.
     - Proxy Protocol을 사용해서 IP 정보 넣어준다. IP가 있어야 추가 보안 처리가 가능하다. ex. 유해 IP 차단
         - 외부사 IP를 Istio Gateway로 전달하면 Istio Gateway가 X-Forwared-For 헤더에 정보 넣어준다
-
-### Kubernetes cluster의 mTLS를 사용한 Zero Trust 구현
-
-Kubernetes cluster에서 Istio를 사용하면 Envoy Proxy를 사이드카로 파드와 함께 배포.
-Envoy Proxy간 통신에는 자동으로 mTLS가 적용된다.
-- **permissive mode** : Envoy Proxy로 plain text나 일반 tls 접근이 가능하도록 허용한다.
-- **strict mode** : Envoy Proxy간 통신에서 양쪽 모두 mTLS를 통해 인증되는 경우에만 트래픽을 허용한다.
-
-비대칭 키를 통해 서로의 인증서를 검증하고 암호화 한다
-암호화 되지 않은 요청 거부
-신뢰할 수 있는 클라이언트 인증서가 아닌 경우에도 거부

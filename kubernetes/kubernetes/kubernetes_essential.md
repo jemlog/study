@@ -25,8 +25,8 @@
 - **로드밸런싱** : 클라이언트 요청을 Pod들에게 분배한다
 
 ### Service Type
-- ClusterIP(default) : 클러스터 내에서만 사용 가능하다
-- NodePort : 노드에 포트를 열어서 외부와 통신 가능하다
-- LoadBalancer
+- ClusterIP(default) : 클러스터 내부에서 접근 가능한 IP
+- NodePort : 클러스터를 구성하고 있는 모든 노드에 NodePort가 할당된다. NodePort를 통해 접근하면 Service와 연결됨
+- LoadBalancer : Load Balancer가 존재하면 External IP를 할당해준다. 클라우드 서비스를 사용하면 제공해주는 LB 쓰면 되고, 온프레미스면 MetalLB 같은 로드밸런서 구축 필요
 
 

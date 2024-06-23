@@ -9,8 +9,6 @@ suspend가 붙어야 suspend를 호출할 수 있다.
  */
 suspend fun main(){
 
-
-
     val threadPool = Executors.newSingleThreadExecutor()
     CoroutineScope(threadPool.asCoroutineDispatcher()).launch {
 

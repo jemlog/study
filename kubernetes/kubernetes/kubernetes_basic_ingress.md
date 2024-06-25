@@ -92,6 +92,8 @@ subjects:
 
 하나의 IP에 대해 여러 domain이 설정되어 있다면, domain name에 따라 다른 Service로 분기처리 가능
 
+<img width="703" alt="스크린샷 2024-06-25 오전 11 52 42" src="https://github.com/jemlog/tech-study/assets/82302520/253b375c-d26a-4333-af26-399a1cb7995d">
+
 ```yaml
 apiVersion: networking.k8s.io/v1
 kind: Ingress

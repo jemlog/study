@@ -1,4 +1,4 @@
-## 쿠버네티스 설치 메뉴얼
+## Kubernetes install manual
 
 ```shell
 echo '======== [4] Rocky Linux 기본 설정 ========'

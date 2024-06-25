@@ -32,7 +32,7 @@ $ helm repo add istio https://istio-release.storage.googleapis.com/charts
 $ helm repo update
 
 $ kubectl create namespace istio-system
-$ helm install istiod istio/istiod -n istio-system --set istio_cni.enabled=true --wait
+$ helm install istiod istio/istiod -n istio-system --set istio_cni.enabled=true --wait # CNI 설정 안하면 Injection 과정에서 istio-init 실패
 $ helm install istiod istio/istiod -n istio-system --wait
 
 $ kubectl create namespace istio-ingress

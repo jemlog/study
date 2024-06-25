@@ -22,19 +22,26 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: myapp-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "true" # http로 들어오면 https로 redirect, tls 설정하면 자동으로 사용됨
+    nginx.ingress.kubernetes.io/rewrite-target: /$2 # Service로 넘겨줄때는 rewrite해서 넘겨주기 가능
 spec:
   ingressClassName: nginx # 해당 값을 사용해서 Ingress와 IngressController를 연결
   rules:
   - host: jeminapp.com # 어떤 도메인을 수신할지 결정
     http:
       paths:
-      - path: / # 모든 URI의 트래픽을 수신한다
+      - path: /user(/|$)(.*) # /user 뒤로 들어오는 URI 모두 허용
         pathType: Prefix
         backend:
           service:
-            name: myapp # 구체적인 Kubernetes Service 설정
+            name: user # 구체적인 Kubernetes Service 설정
             port:
               number: 80
+  tls:                                 
+    - hosts:                           
+        - jeminapp.com                   
+      secretName: myapp-tls     
 ```
 
 ### Ingress Controller
@@ -52,7 +59,7 @@ kind: IngressClass
 metadata:
   name: nginx # 해당 이름으로 Ingress에서 조회
   annotations:
-    ingressclass.kubernetes.io/is-default-class: "true"
+    ingressclass.kubernetes.io/is-default-class: "true" # 전체 중 하나만 default로 줄 수 있다. 필수는 아님.
 spec:
   controller: k8s.io/ingress-nginx # 해당 이름으로 Ingress Controller 매핑
 ```
@@ -94,7 +101,18 @@ subjects:
   namespace: ingress-nginx
 ```
 
-Ingress를 조회해서 연결된 Service들을 찾았다면, 다시 연결된 `EndPointSlice`에 있는 Pod IP를 조회한 후 직접 트래픽을 Pod로 전송. 
+Ingress를 조회해서 연결된 Service들을 찾았다면, 다시 연결된 `EndPointSlice`에 있는 Pod IP를 조회한 후 직접 트래픽을 Pod로 전송.
+
+### TLS setting
+
+Self Signed Certificate로 테스트 가능
+```shell
+mkdir tls && cd tls
+
+openssl genrsa -out tls.key 2048
+openssl req -new -x509 -key tls.key -out tls.crt -days 3650 -subj "/CN=jeminapp.com"
+kubectl create secret tls myapp-tls -n default  --cert=tls.crt --key=tls.key
+```
 
 ### Name based virtual hosting
 

@@ -37,6 +37,11 @@ spec:
               number: 80
 ```
 
+### Ingress Controller
+
+Ingress Controller는 Deployment를 사용해서 Pod로 쿠버네티스에 배포된다. 이때 Ingress Controller Pod에 연결된 Service가 LoadBalancer Type로 생성되고, 
+외부의 LB(AWS LB or MetalLB)에 연결되는 구조다.
+
 ### Ingress Internal
 
 Ingress Controller와 Ingress는 `IngressClass`를 통해 연결된다.
@@ -56,8 +61,8 @@ Ingress Controller는 Kubernetes api-server를 통해 모든 Namespace의 Ingres
 
 Helm Template을 통해 배포할때 **rbac**을 true로 설정하기 (default true)
 
+**ClusterRole**
 ```yaml
-# ClusterRole
 - apiGroups:
   - discovery.k8s.io
   resources:
@@ -76,8 +81,9 @@ Helm Template을 통해 배포할때 **rbac**을 true로 설정하기 (default t
   - watch
 ```
 
+**ClusterRoleBinding**
 ```yaml
-# ClusterRoleBinding
+
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
@@ -87,6 +93,8 @@ subjects:
   name: ingress-nginx
   namespace: ingress-nginx
 ```
+
+Ingress를 조회해서 연결된 Service들을 찾았다면, 다시 연결된 `EndPointSlice`에 있는 Pod IP를 조회한 후 직접 트래픽을 Pod로 전송. 
 
 ### Name based virtual hosting
 

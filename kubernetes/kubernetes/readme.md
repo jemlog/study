@@ -10,3 +10,4 @@
 - [Kubernetes Ingress,Gateway](https://github.com/jemlog/tech-study/blob/master/kubernetes/kubernetes/kubernetes_basic_ingress_gateway.md)
 - [Kubernetes Pod lifecycle](https://github.com/jemlog/tech-study/blob/master/kubernetes/kubernetes/kubernetes_pod_lifecycle.md)
 - [MetalLB](https://github.com/jemlog/tech-study/blob/master/kubernetes/kubernetes/metalLB.md)
+- [Loki Stack Template]()

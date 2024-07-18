@@ -9,6 +9,7 @@ import org.springframework.data.redis.core.ReactiveRedisTemplate
 import org.springframework.data.redis.core.ReactiveSetOperations
 import org.springframework.data.redis.core.ReactiveValueOperations
 import org.springframework.data.redis.core.ReactiveZSetOperations
+import org.springframework.data.redis.core.RedisTemplate
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 import java.time.Duration
@@ -19,10 +20,13 @@ class ReactiveRedisTemplateTest {
 
     @Autowired
     lateinit var redisTemplate: ReactiveRedisTemplate<String,String>
+    @Autowired
+    lateinit var originTemplate: RedisTemplate<String,String>
     lateinit var reactiveListOps: ReactiveListOperations<String,String>
     lateinit var reactiveSetOps: ReactiveSetOperations<String,String>
     lateinit var reactiveValueOps: ReactiveValueOperations<String,String>
     lateinit var reactiveZSetOps: ReactiveZSetOperations<String,String>
+
 
     @BeforeEach
     fun setUp(){
@@ -38,6 +42,18 @@ class ReactiveRedisTemplateTest {
         redisTemplate.convertAndSend("hello_channel","hello").subscribe()
      //   reactiveSetOps.add("hello_set","1","2","3").block()
      //   reactiveZSetOps.add("hello_zset","1", Double.MAX_VALUE).block()
+//        reactiveValueOps.set("test_value", "3").subscribe() // subscribe를 해야 실제 메세지를 보낸다
+//        for(i in 0..100){
+//            redisTemplate.convertAndSend("hello",i.toString()).subscribe()
+//        }
+    }
+
+    @Test
+    fun SCAN_명령어_테스트() {
+        //   reactiveListOps.leftPushAll("hello", "jm", "ki").block() // 이렇게 해야 데이터 저장된
+
+        //   reactiveSetOps.add("hello_set","1","2","3").block()
+        //   reactiveZSetOps.add("hello_zset","1", Double.MAX_VALUE).block()
 //        reactiveValueOps.set("test_value", "3").subscribe() // subscribe를 해야 실제 메세지를 보낸다
 //        for(i in 0..100){
 //            redisTemplate.convertAndSend("hello",i.toString()).subscribe()

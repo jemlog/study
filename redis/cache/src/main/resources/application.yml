@@ -1,5 +1,0 @@
-spring:
-  data:
-    redis:
-      host: 192.168.35.102
-      port: 6381
